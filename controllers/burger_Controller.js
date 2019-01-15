@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
   // findAll returns all entries for a table when used with no options
   db.burgers.findAll({}).then(function (dbburger) {
     // We have access to the todos as an argument inside of the callback function
-    res.render("index", dbburger);
+    res.render("index", {burgers: dbburger});
   });
 });
 
@@ -21,24 +21,25 @@ router.post("/api/burgers", function (req, res) {
   // into our table. In this case we just we pass in an object with a text and
   // complete property
   db.burgers.create({
-    burger_name: req.body.burger_name,
-    devoured: req.body.devoured
+    burger_name: req.body.name,
+    devoured: true
   }).then(function (dbburger) {
     // We have access to the new todo as an argument inside of the callback function
     //res.json(dbburger);
+    console.log(dbburger.insertId);
     res.json({ id: dbburger.insertId });
   });
 });
 
-router.put("/api/burgers", function (req, res) {
+router.put("/api/burgers/:id", function (req, res) {
   // Update takes in two arguments, an object describing the properties we want to update,
   // and another "where" object describing the todos we want to update
   db.burgers.update({
     burger_name: req.body.burger_name,
-    devoured: req.body.devoured
+    devoured: true
   }, {
       where: {
-        id: req.body.id
+        id: req.params.id
       }
     })
     .then(function (dbburger) {
