@@ -22,7 +22,7 @@ router.post("/api/burgers", function (req, res) {
   // complete property
   db.burgers.create({
     burger_name: req.body.name,
-    devoured: true
+    devoured: false
   }).then(function (dbburger) {
     // We have access to the new todo as an argument inside of the callback function
     //res.json(dbburger);
